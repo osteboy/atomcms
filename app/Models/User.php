@@ -29,6 +29,12 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    protected $casts = [
+        'account_created' => 'datetime',
+        'last_login' => 'datetime',
+        'last_online' => 'datetime',
+    ];
+
     public function currencies(): HasMany
     {
         return $this->hasMany(UserCurrency::class, 'user_id');

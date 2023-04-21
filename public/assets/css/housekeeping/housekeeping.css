@@ -1,0 +1,10 @@
+.bg-atom {
+    background-color: #125b98;
+}
+
+.truncate-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+}
