@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\WebsitePermission;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 
 class PermissionsService
 {
@@ -16,10 +17,14 @@ class PermissionsService
 
     public function getOrDefault(string $permissionName, bool $default = false): bool
     {
+        if (Auth::guest()) {
+            return $default;
+        }
+
         if (! array_key_exists($permissionName, $this->permissions->toArray())) {
             return $default;
         }
 
-        return auth()->check() && auth()->user()->rank >= (int) $this->permissions->get($permissionName);
+        return Auth::user()->rank >= (int) $this->permissions->get($permissionName);
     }
 }

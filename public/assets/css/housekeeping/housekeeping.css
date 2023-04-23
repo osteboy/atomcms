@@ -8,3 +8,7 @@
     text-overflow: ellipsis;
     max-width: 200px;
 }
+
+.btn:hover{
+    color: #FFF;
+}

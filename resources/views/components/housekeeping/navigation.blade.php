@@ -10,7 +10,7 @@
 
     <ul class="sidebar-nav" data-coreui="navigation" data-simplebar="">
         <li class="nav-item">
-            <a class="nav-link nav-item-content" href="index.html">
+            <a class="nav-link nav-item-content" href="{{ route('hk.dashboard') }}">
                 <i class="fa-solid fa-house"></i>
                 Dashboard
             </a>
@@ -18,14 +18,14 @@
 
         <li class="nav-title">Hotel Management</li>
         <li class="nav-group">
-            <a class="nav-link nav-group-toggle nav-item-content" href="#">
+            <a class="nav-link nav-group-toggle nav-item-content " href="#">
                 <i class="fa-solid fa-user"></i>
                 Users
             </a>
 
             <ul class="nav-group-items">
                 <li class="nav-item">
-                    <a class="nav-link nav-item-content" href="base/accordion.html">
+                    <a class="nav-link nav-item-content" href="{{ route('hk.users.index') }}">
                         <i class="fa-solid fa-users"></i>
                         All Users
                     </a>

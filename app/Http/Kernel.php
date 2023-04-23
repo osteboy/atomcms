@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\Http\Middleware\BannedMiddleware;
+use App\Http\Middleware\CanImpersonateMiddleware;
 use App\Http\Middleware\FindRetrosMiddleware;
 use App\Http\Middleware\ForceStaffTwoFactorMiddleware;
 use App\Http\Middleware\HasHousekeepingPermission;
@@ -83,5 +84,6 @@ class Kernel extends HttpKernel
         'log.viewer' => LogViewerMiddleware::class,
         'force.staff.2fa' => ForceStaffTwoFactorMiddleware::class,
         'permission' => HasHousekeepingPermission::class,
+        'can.impersonate' => CanImpersonateMiddleware::class,
     ];
 }

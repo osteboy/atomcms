@@ -27,6 +27,13 @@
     <x-messages.flash-messages />
 
     <div id="app" class="bg-gray-100 dark:bg-gray-900">
+        @if (session()->has('impersonated_by'))
+            <div class="w-full bg-gray-800 text-center py-4 text-white">
+                You are currently impersonating {{ Auth::user()->username }}.
+                <a data-turbolinks="false" href="{{ route('impersonate.leave') }}" class="py-2 px-4 ml-2 bg-gray-200 text-black rounded-md hover:bg-gray-300 transition ease-in-out duration-200">Leave</a>
+            </div>
+        @endif
+
         {{-- Top header --}}
         @auth
             <x-top-header />

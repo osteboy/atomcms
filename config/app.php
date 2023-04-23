@@ -195,6 +195,11 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\FortifyServiceProvider::class,
+
+        /*
+         *  Custom providers...
+         */
+        Lab404\Impersonate\ImpersonateServiceProvider::class,
     ],
 
     /*

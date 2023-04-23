@@ -30,6 +30,16 @@ class WebsitePermissionSeeder extends Seeder
                 'min_rank' => '7',
                 'description' => 'Minimum required rank to delete article comments without being the author',
             ],
+            [
+                'permission' => 'impersonate',
+                'min_rank' => '7',
+                'description' => 'Minimum required rank to impersonate another user',
+            ],
+            [
+                'permission' => 'impersonate_anyone',
+                'min_rank' => '7',
+                'description' => 'Minimum required rank to impersonate anyone (also staff users)',
+            ],
         ];
 
         foreach ($permissions as $permission) {
