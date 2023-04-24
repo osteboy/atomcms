@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Housekeeping;
 
 use App\Http\Controllers\Controller;
+use App\Models\Ban;
 use App\Models\User;
+use App\Services\RconService;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
@@ -32,15 +35,32 @@ class UserController extends Controller
         ]);
     }
 
-    public function ban(User $user)
+    public function ban(User $user, RconService $rconService)
     {
         if ($user->rank >= (int)setting('min_staff_rank') && !Auth::user()->god_mode) {
             return response()->json([
                 'success' => false,
-                'message' => __('You cannot delete other staff accounts')
+                'message' => __('You cannot ban other staff accounts')
             ], 403);
         }
 
-        // TODO: Send ban rcon and return success
+        if ($rconService->isConnected()) {
+            $rconService->alertUser($user, 'You have been banned');
+            $rconService->disconnectUser($user);
+        }
+
+        $user->ban()->create([
+            'ip' => $user->ip_current,
+            'user_staff_id' => Auth::id(),
+            'timestamp' => Carbon::now()->timestamp,
+            'ban_expire' => Carbon::now()->addYears(10)->timestamp,
+            'ban_expire' => 'Banned through RCON',
+            'type' => 'account',
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => __('The user received a 10 year ban!')
+        ]);
     }
 }
