@@ -37,6 +37,13 @@ class UserController extends Controller
 
     public function ban(User $user, RconService $rconService)
     {
+        if ($user->ban) {
+            return response()->json([
+                'success' => false,
+                'message' => __('The user is already banned')
+            ], 403);
+        }
+
         if ($user->rank >= (int)setting('min_staff_rank') && !Auth::user()->god_mode) {
             return response()->json([
                 'success' => false,
@@ -44,7 +51,7 @@ class UserController extends Controller
             ], 403);
         }
 
-        if ($rconService->isConnected()) {
+        if ($rconService->isConnected && $user->online !== '0') {
             $rconService->alertUser($user, 'You have been banned');
             $rconService->disconnectUser($user);
         }
@@ -54,7 +61,7 @@ class UserController extends Controller
             'user_staff_id' => Auth::id(),
             'timestamp' => Carbon::now()->timestamp,
             'ban_expire' => Carbon::now()->addYears(10)->timestamp,
-            'ban_expire' => 'Banned through RCON',
+            'ban_reason' => 'Banned through housekeeping',
             'type' => 'account',
         ]);
 
