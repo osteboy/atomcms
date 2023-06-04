@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             WebsiteLanguageSeeder::class,
             WebsiteArticleSeeder::class,
             WebsitePermissionSeeder::class,
+            HousekeepingPermissionSeeder::class,
             WebsiteWordfilterSeeder::class,
             WebsiteTeamSeeder::class,
             WebsiteRuleCategorySeeder::class,
