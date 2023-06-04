@@ -23,7 +23,7 @@
                         <td class="text-center">
                             <div class="avatar avatar-md">
                                 <img
-                                    src="{{ setting('avatar_imager') }}/{{ $user->look }}&direction=2&head_direction=3&gesture=sml&action=wav&headonly=1"
+                                    src="{{ setting('avatar_imager') }}/{{ $user->look }}&direction=2&head_direction=3&gesture=sml&headonly=1"
                                     alt="{{ $user->username }}">
                                 <span @class([
                                     'avatar-status',
@@ -69,7 +69,7 @@
                                 <i class="fa-solid fa-pen-to-square"></i>
                             </button>
 
-                            <button class="btn btn-outline-info" data-coreui-toggle="tooltip" data-coreui-placement="top" title="Ban user" data-action-url="{{ route('hk.users.ban', $user) }}" data-action="ban" data-action-type="banUser" data-method="post">
+                            <button class="btn btn-outline-info" data-coreui-toggle="tooltip" data-coreui-placement="top" title="Ban user" data-action-url="{{ route('hk.users.ban', $user) }}" data-action="ban-user" data-action-type="ban-user" data-method="post">
                                 <i class="fa-solid fa-ban"></i>
                             </button>
 
@@ -79,7 +79,7 @@
                                 </button>
                             </a>
 
-                            <button class="btn btn-outline-danger" data-coreui-toggle="tooltip" data-coreui-placement="top" title="Delete user" data-action-url="{{ route('hk.users.delete', $user) }}" data-action="delete" data-action-type="deleteUser" data-method="delete">
+                            <button class="btn btn-outline-danger" data-coreui-toggle="tooltip" data-coreui-placement="top" title="Delete user" data-action-url="{{ route('hk.users.delete', $user) }}" data-action="delete-user" data-action-type="delete-user" data-method="delete">
                                 <i class="fa-solid fa-trash-can"></i>
                             </button>
                         </td>
@@ -94,23 +94,4 @@
             </x-housekeeping.content-table>
         </div>
     </div>
-
-    @push('javascript')
-        <script>
-            const tooltipTriggerList = document.querySelectorAll('[data-coreui-toggle="tooltip"]')
-            const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new coreui.Tooltip(tooltipTriggerEl));
-
-            document.querySelectorAll('[data-action="delete"]').forEach(function(button) {
-                button.addEventListener('click', function() {
-                    showConfirmationModal(button, button.getAttribute('data-action-type'));
-                });
-            });
-
-            document.querySelectorAll('[data-action="ban"]').forEach(function(button) {
-                button.addEventListener('click', function() {
-                    showConfirmationModal(button, button.getAttribute('data-action-type'));
-                });
-            });
-        </script>
-    @endpush
 </x-housekeeping-layout>

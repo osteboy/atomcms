@@ -1,20 +1,40 @@
-function showConfirmationModal(message) {
-    return new Promise((resolve, reject) => {
-        const modal = document.getElementById("confirmationModal");
-        const modalInstance = new bootstrap.Modal(modal);
+function showConfirmationModal(button, actionType) {
+    const modal = document.getElementById("confirmationModal");
+    const actionUrl = button.getAttribute("data-action-url");
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+    const modalConfirm = modal.querySelector("#confirmationModalConfirm");
 
-        modal.querySelector(".modal-body").textContent = message;
+    const coreuiModal = new coreui.Modal(modal);
+    coreuiModal.show();
 
-        modal.querySelector("#confirmationModalConfirm").onclick = () => {
-            modalInstance.hide();
-            resolve(true);
-        };
+    modalConfirm.onclick = function () {
+        const method = button.getAttribute("data-method");
 
-        modal.querySelector("#confirmationModalCancel").onclick = () => {
-            modalInstance.hide();
-            reject(false);
-        };
+        axios({
+            method: method,
+            url: actionUrl,
+            data: { _token: csrfToken },
+        })
+            .then(function (response) {
+                console.log(response);
+                window.location.reload();
+            })
+            .catch(function (error) {
+                console.log(error);
+                coreuiModal.hide();
+            });
+    };
 
-        modalInstance.show();
-    });
+    switch (actionType) {
+        case "delete-user":
+            modal.querySelector(".modal-title").textContent = "Delete User";
+            modal.querySelector(".modal-body").textContent =
+                "Are you sure you want to delete this user?";
+            break;
+        case "ban-user":
+            modal.querySelector(".modal-title").textContent = "Ban User";
+            modal.querySelector(".modal-body").textContent =
+                "Are you sure you want to ban this user?";
+            break;
+    }
 }

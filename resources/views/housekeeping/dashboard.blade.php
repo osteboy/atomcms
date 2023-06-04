@@ -51,6 +51,7 @@
     </div>
 
     <div class="row">
+
         <div class="col-xl-6">
             <x-housekeeping.content-table>
                 <x-slot:title>
@@ -71,7 +72,7 @@
                         <td class="text-center">
                             <div class="avatar avatar-md">
                                 <img
-                                    src="{{ setting('avatar_imager') }}/{{ $user->look }}&direction=2&head_direction=3&gesture=sml&action=wav&headonly=1"
+                                    src="{{ setting('avatar_imager') }}/{{ $user->look }}&direction=2&head_direction=3&gesture=sml&headonly=1"
                                     alt="{{ $user->username }}">
                                 <span @class([
                                     'avatar-status',

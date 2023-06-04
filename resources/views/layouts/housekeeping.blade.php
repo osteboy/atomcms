@@ -32,47 +32,19 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
 <script src="{{ asset('assets/js/housekeeping/coreui.bundle.min.js') }}"></script>
+<script src="{{ asset('assets/js/housekeeping/housekeeping.js') }}"></script>
 
 @stack('javascript')
+
 <script>
-    function showConfirmationModal(button, actionType) {
-        const modal = document.getElementById('confirmationModal');
-        const actionUrl = button.getAttribute('data-action-url');
-        const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
-        const modalConfirm = modal.querySelector('#confirmationModalConfirm');
+    const tooltipTriggerList = document.querySelectorAll('[data-coreui-toggle="tooltip"]');
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new coreui.Tooltip(tooltipTriggerEl));
 
-        const coreuiModal = new coreui.Modal(modal);
-        coreuiModal.show();
-
-        modalConfirm.onclick = function() {
-            const method = button.getAttribute('data-method');
-
-            axios({
-                method: method,
-                url: actionUrl,
-                data: {_token: csrfToken}
-            })
-            .then(function(response) {
-                console.log(response);
-                window.location.reload();
-            })
-            .catch(function(error) {
-                console.log(error);
-                coreuiModal.hide();
-            });
-        };
-
-        switch (actionType) {
-            case 'deleteUser':
-                modal.querySelector('.modal-title').textContent = 'Delete User';
-                modal.querySelector('.modal-body').textContent = 'Are you sure you want to delete this user?';
-                break;
-            case 'banUser':
-                modal.querySelector('.modal-title').textContent = 'Ban User';
-                modal.querySelector('.modal-body').textContent = 'Are you sure you want to ban this user?';
-                break;
-        }
-    }
+    document.querySelectorAll('[data-action]').forEach(function(button) {
+        button.addEventListener('click', function() {
+            showConfirmationModal(button, button.getAttribute('data-action-type'));
+        });
+    });
 </script>
 </body>
 </html>
